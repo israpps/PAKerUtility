@@ -39,7 +39,7 @@ jobs:
       run: |
         cd ${{ github.event.repository.name }}
         cd build
-        7z a -t7z ${{ github.event.repository.name }}-${{ matrix.toolchain }}.7z ${{ github.event.repository.name }}* ../README.md ../PATCHES.TXT ../../LICENSE
+        7z a -t7z ${{ github.event.repository.name }}-${{ matrix.toolchain }}.7z ${{ github.event.repository.name }}* ../../README.md ../../PATCHES.TXT ../../LICENSE
 
     - name: Upload artifacts
       if: ${{ success() }}
