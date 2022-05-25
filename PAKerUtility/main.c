@@ -9,14 +9,14 @@
 
 static const char* SyntaxErrorMsg=	"Syntax error.\n"			\
 					"\tSupported modes of operation:\n"	\
-					"\t\t/c\t- Create PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility /c <PAK file> <Manifest file>\n"	\
-					"\t\t/x\t- Extract all files from the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility /x <PAK file>\n"		\
-					"\t\t/l\t- List all files present in the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility /l <PAK file>\n"		\
-					"\t\t/m\t- Create a (CSV) manifest file of the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility /m <PAK file> <Manifest file>\n";
+					"\t\t-c\t- Create PAK archive\n"	\
+					"\t\t\tSyntax: PAKerUtility -c <PAK file> <Manifest file>\n"	\
+					"\t\t-x\t- Extract all files from the PAK archive\n"	\
+					"\t\t\tSyntax: PAKerUtility -x <PAK file>\n"		\
+					"\t\t-l\t- List all files present in the PAK archive\n"	\
+					"\t\t\tSyntax: PAKerUtility -l <PAK file>\n"		\
+					"\t\t-m\t- Create a (CSV) manifest file of the PAK archive\n"	\
+					"\t\t\tSyntax: PAKerUtility -m <PAK file> <Manifest file>\n";
 
 int main(int argc, char **argv)
 {
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	crc_init();
 
 	result=0;
-	if(!strcmp(argv[1], "/c")){
+	if(!strcmp(argv[1], "-c")){
 		if(argc==4){
 			if((NumFiles=LoadFileList(argv[3], &FileList))>0 && FileList!=NULL){
 				result=CreatePAKFile(argv[2], NumFiles, FileList);
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 		}
 
 	}
-	else if(!strcmp(argv[1], "/x")){
+	else if(!strcmp(argv[1], "-x")){
 		if(argc==3){
 			result=DumpPAKFile(argv[2]);
 		}
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 			result=EINVAL;
 		}
 	}
-	else if(!strcmp(argv[1], "/l")){
+	else if(!strcmp(argv[1], "-l")){
 		if(argc==3){
 			result=ListPAKFile(argv[2]);
 		}
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 			result=EINVAL;
 		}
 	}
-	else if(!strcmp(argv[1], "/m")){
+	else if(!strcmp(argv[1], "-m")){
 		if(argc==4){
 			result=GeneratePAKFileManifest(argv[2], argv[3]);
 		}
