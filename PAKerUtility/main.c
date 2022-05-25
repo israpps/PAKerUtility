@@ -2,7 +2,12 @@
 #include <errno.h>
 #include <string.h>
 #include <malloc.h>
+
+#ifdef __unix__
+#include <unistd.h>
+#elif defined(_WIN32) || defined(WIN32)
 #include <direct.h>
+#endif
 
 #include "PAK.h"
 #include "PAKCrypt.h"
@@ -24,7 +29,9 @@ int main(int argc, char **argv)
 	struct FileGenListEnt *FileList;
 
 	printf(	"PAKer Utility v1.01\n"
-			"===================\n\n");
+			"Recompiled by El_isra\n"
+			"Made by SP193\n"
+			"---------------------\n\n");
 
 	if(argc<2)
 	{
