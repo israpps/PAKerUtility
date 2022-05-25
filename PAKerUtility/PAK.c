@@ -7,15 +7,6 @@
 #include "PAK.h"
 #include "PAKCrypt.h"
 
-struct PAKFileData{
-	struct pak_header_data Header;
-	struct pak_entry_data *FileEntries;
-};
-
-struct FileGenListNode{
-	struct FileGenListNode *next;
-	struct FileGenListEnt FileListGenEnt;
-};
 
 int LoadPAKFile(FILE *file, struct PAKFileData *PAKFileData){
 	CryptographyContext crypt_param;

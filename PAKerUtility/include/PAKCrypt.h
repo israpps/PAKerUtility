@@ -1,4 +1,6 @@
 /* WARNING! Do not remove the brackets around "x" as they are required to prevent unintended errors caused by the change in the order of operation. */
+#ifndef PAKCRYPT_H
+#define PAKCRYPT_H
 
 #ifdef BIG_ENDIAN
 	#define BSWAP32(x) (((x)<<24)|((x&0xff00)<<8)|(((x)&0xff0000)>>8)|((x)>>24))
@@ -20,3 +22,4 @@ int InitCryptographyContext(unsigned int IV, CryptographyContext* crypt_param);
 void SetKey(unsigned int key, CryptographyContext* crypt_param);
 void cipher(void *buffer, unsigned int size, CryptographyContext* crypt_param);
 
+#endif //PAKCRYPT_H

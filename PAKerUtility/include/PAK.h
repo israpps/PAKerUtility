@@ -1,6 +1,8 @@
 #pragma push
 #pragma pack(1)
 
+#ifndef PAK_H
+#define PAK_H
 #define PAK_HEADER_FLAG_ENCRYPTED		0x200
 struct pak_header_data {
 	char magic[4];
@@ -31,6 +33,16 @@ struct FileGenListEnt{
 
 #pragma pop
 
+struct PAKFileData{
+	struct pak_header_data Header;
+	struct pak_entry_data *FileEntries;
+};
+
+struct FileGenListNode{
+	struct FileGenListNode *next;
+	struct FileGenListEnt FileListGenEnt;
+};
+
 /* Function prototypes. */
 int LoadPAKFile(FILE *file, struct PAKFileData *PAKFileData);
 int ExtractFilePAKFile(FILE *infp, unsigned int index, struct PAKFileData* PAKFileData, unsigned int *checksum_out);
@@ -40,3 +52,5 @@ int GeneratePAKFileManifest(const char *filename, const char *ManifestFilename);
 int DumpPAKFile(const char *filename);
 int CreatePAKFile(const char *filename, unsigned int NumFiles, struct FileGenListEnt *FileList);
 int LoadFileList(const char *filename, struct FileGenListEnt **FileList);
+
+#endif

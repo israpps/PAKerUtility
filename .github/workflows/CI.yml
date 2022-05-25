@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - v*
+  pull_request:
+  repository_dispatch:
+    types: [run_build]
+
+jobs:
+  build:
+    strategy:
+     matrix:
+       toolchain: ["windows-static-x86","linux-x86"]
+    runs-on: ubuntu-latest
+    container: dockcross/${{ matrix.toolchain }}:latest
+    steps:
+
+    - uses: actions/checkout@v2
+    - run: |
+        sudo apt-get install --assume-yes p7zip-full 
+        git fetch --prune --unshallow
+        
+    - name: Compile project
+      run: |
+        DATEE=`date '+[%Y-%m-%d]'`
+        echo "package compiled and released on $DATEE" >>README.md
+        echo "Commit  ${{ github.sha }}" >>README.md
+        cd ${{ github.event.repository.name }}
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make clean all
+
+    - name: compress
+      run: |
+        cd ${{ github.event.repository.name }}
+        cd build
+        7z a -t7z ${{ github.event.repository.name }}-${{ matrix.toolchain }}.7z ${{ github.event.repository.name }}* ../README.md ../PATCHES.TXT ../../LICENSE
+
+    - name: Upload artifacts
+      if: ${{ success() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ github.event.repository.name }}-${{ matrix.toolchain }}
+        path: |
+             build/${{ github.event.repository.name }}*.7z
+             
+    - name: Deploy pre-release
+      uses: softprops/action-gh-release@v1
+      if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        fail_on_unmatched_files: true
+        files: |
+            build/${{ github.event.repository.name }}*.7z
+        name: "Latest build"
+        tag_name: "Latest"
+        prerelease: true
+        
