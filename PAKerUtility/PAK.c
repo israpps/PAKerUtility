@@ -2,7 +2,12 @@
 #include <errno.h>
 #include <string.h>
 #include <malloc.h>
+
+#ifdef __unix__
+#include <unistd.h>
+#elif defined(_WIN32) || defined(WIN32)
 #include <direct.h>
+#endif
 
 #include "PAK.h"
 #include "PAKCrypt.h"
