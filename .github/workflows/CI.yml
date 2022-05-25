@@ -60,7 +60,7 @@ jobs:
       with:
         name: ${{ github.event.repository.name }}-${{ matrix.toolchain }}
         path: |
-             build/${{ github.event.repository.name }}*.7z
+            ${{ github.event.repository.name }}/build/${{ github.event.repository.name }}*.7z
              
     - name: Deploy pre-release
       uses: softprops/action-gh-release@v1
