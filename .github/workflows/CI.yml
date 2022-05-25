@@ -11,7 +11,20 @@ on:
     types: [run_build]
 
 jobs:
+  clean_release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - name: delete previous tag/release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: "latest"
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: [clean_release]
     strategy:
      matrix:
        toolchain: ["windows-static-x86","linux-x86"]
@@ -51,12 +64,12 @@ jobs:
              
     - name: Deploy pre-release
       uses: softprops/action-gh-release@v1
-      if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+      if: (github.ref == 'refs/heads/main')
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
         fail_on_unmatched_files: true
         files: |
-            build/${{ github.event.repository.name }}*.7z
+            ${{ github.event.repository.name }}/build/${{ github.event.repository.name }}*.7z
         name: "Latest build"
         tag_name: "Latest"
         prerelease: true
