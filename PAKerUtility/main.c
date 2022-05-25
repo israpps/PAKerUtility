@@ -11,17 +11,21 @@
 
 #include "PAK.h"
 #include "PAKCrypt.h"
-
-static const char* SyntaxErrorMsg=	"Syntax error.\n"			\
+#define SyntaxError "Syntax error.\n"
+#define CREATE_PAK_SINTAX  	"Syntax: %s -c <PAK file> <Manifest file>\n"
+#define EXTRACT_PAK_SINTAX 	"Syntax: %s -x <PAK file>\n"
+#define LIST_PAK_SINTAX		"Syntax: %s -l <PAK file>\n"
+#define CREATE_PAK_MANIFEST	"Syntax: %s -m <PAK file> <Manifest file>\n"
+static const char* SyntaxErrorMsg= SyntaxError \
 					"\tSupported modes of operation:\n"	\
 					"\t\t-c\t- Create PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility -c <PAK file> <Manifest file>\n"	\
+					"\t\t\t" CREATE_PAK_SINTAX \
 					"\t\t-x\t- Extract all files from the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility -x <PAK file>\n"		\
+					"\t\t\t" EXTRACT_PAK_SINTAX \
 					"\t\t-l\t- List all files present in the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility -l <PAK file>\n"		\
+					"\t\t\t" LIST_PAK_SINTAX \
 					"\t\t-m\t- Create a (CSV) manifest file of the PAK archive\n"	\
-					"\t\t\tSyntax: PAKerUtility -m <PAK file> <Manifest file>\n";
+					"\t\t\t" CREATE_PAK_MANIFEST ;
 
 int main(int argc, char **argv)
 {
@@ -35,7 +39,7 @@ int main(int argc, char **argv)
 
 	if(argc<2)
 	{
-		printf(SyntaxErrorMsg);
+		printf(SyntaxErrorMsg, argv[0], argv[0], argv[0], argv[0]);
 		return EINVAL;
 	}
 
@@ -54,7 +58,7 @@ int main(int argc, char **argv)
 			}
 		}
 		else{
-			printf(SyntaxErrorMsg);
+			printf(SyntaxError"\t"CREATE_PAK_SINTAX, argv[0]);
 			result=EINVAL;
 		}
 
@@ -64,7 +68,7 @@ int main(int argc, char **argv)
 			result=DumpPAKFile(argv[2]);
 		}
 		else{
-			printf(SyntaxErrorMsg);
+			printf(SyntaxError"\t"EXTRACT_PAK_SINTAX, argv[0]);
 			result=EINVAL;
 		}
 	}
@@ -73,7 +77,7 @@ int main(int argc, char **argv)
 			result=ListPAKFile(argv[2]);
 		}
 		else{
-			printf(SyntaxErrorMsg);
+			printf(SyntaxError"\t"LIST_PAK_SINTAX, argv[0]);
 			result=EINVAL;
 		}
 	}
@@ -82,7 +86,7 @@ int main(int argc, char **argv)
 			result=GeneratePAKFileManifest(argv[2], argv[3]);
 		}
 		else{
-			printf(SyntaxErrorMsg);
+			printf(SyntaxError"\t"CREATE_PAK_MANIFEST, argv[0]);
 			result=EINVAL;
 		}
 	}
