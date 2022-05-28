@@ -137,7 +137,7 @@ int ListPAKFile(const char *filename){
 	if((infp=fopen(filename, "rb"))!=NULL){
 		if((result=LoadPAKFile(infp, &PAKFileData))==0){
 			for(i=0; i<PAKFileData.Header.num_entries; i++){
-				printf("Index: %u - Ident: %c%c%c%c, filepath: %s, size: %u, checksum: 0x%08x\n", i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize), PAKFileData.FileEntries[i].checksum);
+				printf("Index: %-*u - Ident: %c%c%c%c, filepath: %s, size: %u, checksum: 0x%08x\n", 3, i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize), PAKFileData.FileEntries[i].checksum);
 			}
 
 			UnloadPAKFile(&PAKFileData);
@@ -167,7 +167,7 @@ int GeneratePAKFileManifest(const char *filename, const char *ManifestFilename){
 			for(i=0; i<PAKFileData.Header.num_entries; i++){
 				sprintf(line, "%s;%c%c%c%c\n", PAKFileData.FileEntries[i].filepath, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3]);
 				fputs(line, ManfstFile);
-				printf("Index: %u - Ident: %c%c%c%c, filepath: %s, size: %u, checksum: 0x%08x\n", i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize), PAKFileData.FileEntries[i].checksum);
+				printf("Index: %-*u - Ident: %c%c%c%c, filepath: %s, size: %u, checksum: 0x%08x\n", 3, i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize), PAKFileData.FileEntries[i].checksum);
 			}
 
 			UnloadPAKFile(&PAKFileData);
@@ -197,7 +197,7 @@ int DumpPAKFile(const char *filename){
 			chdir("extracted");
 
 			for(i=0,crc_f=0; i<PAKFileData.Header.num_entries; i++){
-				printf("Index: %u - Ident: %c%c%c%c, filepath: %s, size: %u, ", i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize));
+				printf("Index: %-*u - Ident: %c%c%c%c, filepath: %s, size: %u, ", 3, i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize));
 				result=ExtractFilePAKFile(infp, i, &PAKFileData, &checksum);
 
 				printf("crc32:");
