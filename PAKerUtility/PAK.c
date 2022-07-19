@@ -193,8 +193,8 @@ int DumpPAKFile(const char *filename){
 
 	if((infp=fopen(filename, "rb"))!=NULL){
 		if((result=LoadPAKFile(infp, &PAKFileData))==0){
-			mkdir("extracted");
-			chdir("extracted");
+			mkdir("ext_"filename);
+			chdir("ext_"filename);
 
 			for(i=0,crc_f=0; i<PAKFileData.Header.num_entries; i++){
 				printf("Index: %-*u - Ident: %c%c%c%c, filepath: %s, size: %u, ", 3, i+1, PAKFileData.FileEntries[i].ident[0], PAKFileData.FileEntries[i].ident[1], PAKFileData.FileEntries[i].ident[2], PAKFileData.FileEntries[i].ident[3], PAKFileData.FileEntries[i].filepath, get_u32(&PAKFileData.FileEntries[i].filesize));
