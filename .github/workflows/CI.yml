@@ -26,7 +26,7 @@ jobs:
   build:
     strategy:
      matrix:
-       toolchain: ["windows-static-x86","linux-x86"]
+       toolchain: ["windows-static-x86"] #,"linux-x86"
     runs-on: ubuntu-latest
     container: dockcross/${{ matrix.toolchain }}:latest
     steps:
