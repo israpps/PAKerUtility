@@ -12,10 +12,10 @@ on:
 
 jobs:
   clean_release:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - name: delete previous tag/release
+      if: github.ref == 'refs/heads/main'
       uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
         delete_release: true
@@ -32,6 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
         sudo apt-get install --assume-yes p7zip-full 
         git fetch --prune --unshallow
         
