@@ -190,7 +190,7 @@ int DumpPAKFile(const char *filename){
 	struct PAKFileData PAKFileData;
 	FILE *infp;
 	int result;
-	char  FOLDER[256] = "ext_"
+	char  FOLDER[256] = "ext_";
 	strcat(FOLDER, filename);
 	if((infp=fopen(filename, "rb"))!=NULL){
 		if((result=LoadPAKFile(infp, &PAKFileData))==0){
