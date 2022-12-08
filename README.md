@@ -1,10 +1,34 @@
 # PAKerUtility
- Command line tool to (un)pack `.PAK` files used by the Sony utility discs for PS2 and PSX.
+ Command line tool to (un)pack `PAK` files used by the Sony utility discs[^1] for PS2 and PSX.
 
  Rebuilt on Cmake By El_isra
  
+## command sintax
+
+Create PAK archive
+```bash
+PAKerUtility.exe -c <PAK file> <Manifest file>
+```
+
+Extract PAK archive
+```bash
+PAKerUtility.exe -x <PAK file>
+```
+
+List contents
+```bash
+PAKerUtility.exe -l <PAK file>
+```
+
+Create manifest 
+```bash
+PAKerUtility.exe -m <PAK file> <Manifest file>
+```
+
+
  
-Original Readme by SP193:
+# Original Readme by SP193:
+
 ```log
 PAKer Utility v1.01 - 2014/07/07
 --------------------------------
@@ -31,3 +55,7 @@ Changelog:
 2012/05/05	- v1.00:
 	*Initial public release
 ```
+
+***
+
+[^1]: No known PS2 game uses this file format! Only PS2 utility 
