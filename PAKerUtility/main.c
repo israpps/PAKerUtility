@@ -5,6 +5,8 @@
 
 #ifdef __unix__
 #include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #elif defined(_WIN32) || defined(WIN32)
 #include <direct.h>
 #endif
